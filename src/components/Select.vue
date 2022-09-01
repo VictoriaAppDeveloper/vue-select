@@ -893,7 +893,6 @@ export default {
         )
         optionList.unshift(createdOption)
       }
-      console.log(optionList)
 
       return optionList
     },
