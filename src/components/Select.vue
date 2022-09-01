@@ -864,22 +864,38 @@ export default {
      * @return {array}
      */
     filteredOptions() {
-      const optionList = [].concat(this.optionList)
+      let optionList = []
+      if (this.filterable) {
+        optionList = [].concat(this.optionList)
 
-      if (!this.filterable && !this.taggable) {
-        return optionList
+        if (!this.taggable) {
+          return optionList
+        }
+
+        let options = this.search.length
+          ? this.filter(optionList, this.search, this)
+          : optionList
+        if (this.taggable && this.search.length) {
+          const createdOption = this.createOption(this.search)
+          if (!this.optionExists(createdOption)) {
+            options.unshift(createdOption)
+          }
+        }
+        return options
       }
 
-      let options = this.search.length
-        ? this.filter(optionList, this.search, this)
-        : optionList
+      optionList = this.optionList
       if (this.taggable && this.search.length) {
         const createdOption = this.createOption(this.search)
-        if (!this.optionExists(createdOption)) {
-          options.unshift(createdOption)
-        }
+        optionList = optionList.filter(
+          option => Object.keys(option).length > 1 ||
+            option.label === this.search || option === this.search
+        )
+        optionList.unshift(createdOption)
       }
-      return options
+      console.log(optionList)
+
+      return optionList
     },
 
     /**
