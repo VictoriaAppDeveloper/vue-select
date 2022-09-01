@@ -7,7 +7,6 @@
             @close="onClose"
             :filterable="false"
             @search="onSearch"
-            taggable
   >
     <template #no-options>
       <span/>
@@ -83,7 +82,6 @@ export default {
       this.observer.disconnect()
     },
     async infiniteScroll([{ isIntersecting, target }]) {
-      console.log(111)
       if (isIntersecting && !this.searching) {
         const ul = target.offsetParent
         const scrollTop = target.offsetParent.scrollTop
@@ -99,7 +97,7 @@ export default {
         this.loading = true
         const params = {
           ...(this.params.page && {page: this.params.page}),
-          ...((this.params.search && this.params.search.length >= 3) && {search: this.params.search})
+          ...(this.params.search && {search: this.params.search})
         }
         const { data: { data, last_page, current_page } } = await
           axios.get('/gateway/api/v1/users', { params })

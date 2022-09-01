@@ -2,9 +2,15 @@
   <div class="dev-selects">
     <div>
       <label>
-        Taggable
+        Taggable Multiple
       </label>
-      <DevSelectTaggable/>
+      <DevSelectMultipleTaggable/>
+    </div>
+    <div>
+      <label>
+        Simple Multiple
+      </label>
+      <DevSelectMultiple/>
     </div>
     <div>
       <label>
@@ -27,9 +33,10 @@ body, html {
 }
 </style>
 <script>
-import DevSelectTaggable from "./DevSelectTaggable";
+import DevSelectMultipleTaggable from "./DevSelectMultipleTaggable";
+import DevSelectMultiple from "./DevSelectMultiple";
 import DevSelect from "./DevSelect";
 export default {
-  components: { DevSelect, DevSelectTaggable }
+  components: { DevSelect, DevSelectMultiple, DevSelectMultipleTaggable }
 }
 </script>

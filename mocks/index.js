@@ -37,7 +37,7 @@ const randomNumber = (length) => {
 }
 
 
-const randomId = () => +(Date.now() + '' +  Math.floor(100000 + Math.random() * 900000))
+const randomId = () => Math.floor(new Date().valueOf() * Math.random())
 
 const genUsers = () => Array.from({ length: 100 }, (_, i) => ({
   email: randomWord(12),
@@ -46,21 +46,25 @@ const genUsers = () => Array.from({ length: 100 }, (_, i) => ({
   id: randomId()
 }))
 
-const getUsers = (users, search = '', page = 1) => {
+const getUsers = (users, search = '', page = 1, noPagination = 0) => {
   let data = users
+  let current_page = 1
+  let last_page = 1
 
-  if (search.length) {
-    data = data.filter(user => {
-      const s = search.toLowerCase()
-      return user.email.toLowerCase().includes(s) ||
-        user.phone.toLowerCase().includes(s) ||
-        user.full_name.toLowerCase().includes(s);
-    })
+  if (!noPagination) {
+    if (search.length) {
+      data = data.filter(user => {
+        const s = search.toLowerCase()
+        return user.email.toLowerCase().includes(s) ||
+          user.phone.toLowerCase().includes(s) ||
+          user.full_name.toLowerCase().includes(s);
+      })
+    }
+    current_page = page
+    last_page = Math.ceil(data.length / 20) || 1
+
+    data = data.slice((page - 1) * 20, page * 20)
   }
-  const current_page = page
-  const last_page = Math.ceil(data.length/20) || 1
-
-  data = data.slice((page - 1) * 20, page * 20)
 
   return {
     data,
@@ -77,8 +81,11 @@ export default {
     mock.onGet(/gateway\/api\/v1\/users\/?.*/).reply(config => {
       const page = config.params.page
       const search = config.params.search
+      const noPagination = config.params.noPagination
       return new Promise((resolve, reject) => {
-          resolve([200, getUsers(users, search, page)])
+        setTimeout(() => {
+          resolve([200, getUsers(users, search, page, noPagination)])
+        }, 2000)
       })
     })
   }

@@ -967,7 +967,7 @@ export default {
 
     open(isOpen) {
       this.$emit(isOpen ? 'open' : 'close')
-    },
+    }
   },
 
   created() {
