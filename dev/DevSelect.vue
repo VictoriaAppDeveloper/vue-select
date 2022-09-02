@@ -42,7 +42,7 @@ export default {
     },
     computedUsers () {
       return this.search ?
-        this.users.filter(user => user.label.toLowerCase().includes(this.search)) :
+        this.users.filter(user => user.label.toLowerCase().includes(this.search.toLowerCase())) :
         this.users
     }
   },
