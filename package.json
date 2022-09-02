@@ -138,6 +138,7 @@
   "dependencies": {
     "@babel/plugin-proposal-class-static-block": "^7.18.6",
     "axios": "^0.27.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "vue-final-modal": "^2.4.1"
   }
 }

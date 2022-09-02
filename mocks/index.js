@@ -79,6 +79,7 @@ export default {
     let mock = new MockAdapter(axios);
     let users = genUsers()
     mock.onGet(/gateway\/api\/v1\/users\/?.*/).reply(config => {
+      console.log(config.url, config.params)
       const page = config.params.page
       const search = config.params.search
       const noPagination = config.params.noPagination
